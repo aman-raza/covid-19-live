@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>OrganiCoders</title>
+    <style>{
+        font-family: Professor;
+    }
+</style>
+  <link rel="stylesheet" href="corona.css">
+
+</head>
+<body>
+    <header id="header" class="header header-hide">
+        <h1 style="text-align: center;"><font color="#93f542">n</font>utrifrnd</h1>
+        <p style="text-align: center;"><a href="#"><font color="#93f542"><img src="home.jpg" width="100" height="40"></font></a></p>
+        <h3 style="text-align: center;">(LIVE COVID-19 TRACKING)</h3>
+    </header>
+    <table style="text-align: center; margin-left:auto;margin-right:auto;" width="500px" border="10px" cellspacing="0" cellpadding="8px">
+        <tr>
+            <td style="text-align: center;" colspan="2"><h2><b>Global Data</b></h2> </td>
+        </tr>
+        <tbody id="global-wise"></tbody>
+    </table>
+    <br>
+    <table style="text-align: center; margin-left:auto;margin-right:auto;" width="60%" border="10px" cellspacing="0" cellpadding="8px">
+        <tr>
+            <td style="text-align: center;" colspan="7"><h2><b>Countries Data</b></h2> </td>
+        </tr>
+        <tr>
+            <th style="text-align: center;">Country</th>
+            <th style="text-align: center;">NewConfirmed</th>
+            <th style="text-align: center;">NewDeaths</th>
+            <th style="text-align: center;">NewRecovered</th>
+            <th style="text-align: center;"><font color="#325ba8">TotalConfirmed</font></th>
+            <th style="text-align: center;"><font color="#a83232">TotalDeaths</font></th>
+            <th style="text-align: center;"><font color="#69a832">TotalRecovered</font></th>
+        </tr>
+        <tbody id="country-wise"></tbody>
+    </table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+    $.ajax({url: "https://api.covid19api.com/summary",type: "GET",datatype: "JSON",success: function(data){
+            console.log(data);
+            console.log(data.Countries[76]);
+            console.log(data.Countries[76].TotalConfirmed);
+
+            $.each(data.Global, function(key, value){
+                $("#global-wise").append("<tr><td>" + key + "</td><td>" + value + "</td></tr>");
+            });
+
+            var sno = 1;
+
+            $.each(data.Countries, function(key, value){
+                $("#country-wise").append("<tr>" + 
+                                        "<td>" + value.Country +"</td>" +
+                                        "<td>" + value.NewConfirmed +"</td>" +
+                                        "<td>" + value.NewDeaths +"</td>" +
+                                        "<td>" + value.NewRecovered +"</td>" +
+                                        "<td>" + value.TotalConfirmed +"</td>" +
+                                        "<td>" + value.TotalDeaths +"</td>" +
+                                        "<td>" + value.TotalRecovered +"</td>" +
+                                        "</tr>");
+                sno++;
+            });
+        }
+    });
+</script>
+</body>
+</html>
